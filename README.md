@@ -33,14 +33,14 @@
 
 3. **Hard: Level 7-10**
     - **Number of Commands:** 4  
-   - **Input Time:** 2.4 seconds → 1.8 seconds
+   - **Input Time:** 3.0 seconds → 2.4 seconds
 
     | Level | Commands | Time Limit |
     | ----- | -------- | ---------- |
-    | 7     | 4        | 2.4 s      |
-    | 8     | 4        | 2.2 s      |
-    | 9     | 4        | 2.0 s      |
-    | 10     | 4        | 1.8 s      |
+    | 7     | 4        | 3.0 s      |
+    | 8     | 4        | 2.8 s      |
+    | 9     | 4        | 2.6 s      |
+    | 10     | 4        | 2.4 s      |
 
 ## 🎮 How to Start & Change Difficulty
 
@@ -131,28 +131,28 @@
 ## Circuit
 
 1. SSD1306 OLED (I2C)
-| Encoder Pin | ESP32-C3 Pin | Purpose      |
-| ----------- | ------------ | ------------ |
-| CLK         | D0           | Encoder A    |
-| DT          | D1           | Encoder B    |
-| SW          | D2           | Button press |
-| VCC         | 3V3          | Power        |
-| GND         | GND          | Ground       |
+| Encoder Pin | ESP32-C3 Pin |
+| ----------- | ------------ |
+| SCL         | D5           | orange
+| SDA         | D4           | purple
+| VCC         | 3V3          | 
+| GND         | GND          | 
 
 2. Rotary Encoder + Button
-Encoder Pin	ESP32-C3 Pin
-CLK	D0	Red
-DT	D1	Blue
-VCC	3V3	Green
-GND	GND	Ground
+| Encoder Pin | ESP32-C3 Pin | 
+| ----------- | ------------ | 
+| CLK         | D0           | white
+| DT          | D1           | yellow
+| SW          | D2           | red
+| GND         | GND          | Ground
 
 3. ADXL345 Accelerometer (I2C)
 | ADXL345 Pin | ESP32-C3 Pin    |
 | ----------- | --------------- |
 | VCC         | 3V3             |
 | GND         | GND             |
-| SDA         | D4              |
-| SCL         | D5              |
+| SDA         | D4              | orange
+| SCL         | D5              | blue
 
 4. NeoPixel LED
 | NeoPixel Pin | ESP32-C3 Pin |
@@ -166,4 +166,3 @@ GND	GND	Ground
 | ---------- | ---------------- |
 | +          | D7 (PWM capable) |
 | -          | GND              |
-
