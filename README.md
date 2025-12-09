@@ -116,6 +116,41 @@
    - **Shake**: detect high acceleration  
    - **Flip** (optional): detect Z-axis orientation change.
 
+### ---------- ADXL345 ----------
+accel = adafruit_adxl34x.ADXL345(i2c)
+
+baseline_x = 0.0
+baseline_y = 0.0
+baseline_z = 9.8
+
+def calibrate_baseline(samples=20, delay=0.01):
+    """简单求平均，作为当前姿态的基线"""
+    global baseline_x, baseline_y, baseline_z
+    sx = sy = sz = 0.0
+    for _ in range(samples):
+        x, y, z = accel.acceleration
+        sx += x
+        sy += y
+        sz += z
+        time.sleep(delay)
+    baseline_x = sx / samples
+    baseline_y = sy / samples
+    baseline_z = sz / samples
+
+def accel_diff_mag_filtered():
+    """返回经过简单低通滤波后的差值长度"""
+    global filtered_diff
+    x, y, z = accel.acceleration
+    dx = x - baseline_x
+    dy = y - baseline_y
+    dz = z - baseline_z
+    raw = math.sqrt(dx*dx + dy*dy + dz*dz)
+
+    # 一阶低通滤波：filtered = α*raw + (1-α)*prev
+    filtered_diff = FILTER_ALPHA * raw + (1.0 - FILTER_ALPHA) * filtered_diff
+    return filtered_diff
+
+
 5. **NeoPixel**
 
    Displays game state (action cues, failure, victory, start animation).
@@ -133,8 +168,8 @@
 1. SSD1306 OLED (I2C)
 | Encoder Pin | ESP32-C3 Pin |
 | ----------- | ------------ |
-| SCL         | D5           | orange
-| SDA         | D4           | purple
+| SCL         | D5           | purple
+| SDA         | D4           | orange
 | VCC         | 3V3          | 
 | GND         | GND          | 
 
@@ -151,7 +186,7 @@
 | ----------- | --------------- |
 | VCC         | 3V3             |
 | GND         | GND             |
-| SDA         | D4              | orange
+| SDA         | D4              | gray
 | SCL         | D5              | blue
 
 4. NeoPixel LED
@@ -166,3 +201,7 @@
 | ---------- | ---------------- |
 | +          | D7 (PWM capable) |
 | -          | GND              |
+
+## Box design idea
+
+90s style handy game machine style
